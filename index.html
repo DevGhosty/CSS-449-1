@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lifespan Estimator — Lifestyle Survey</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Lifespan Estimator</h1>
+        <p class="tagline">A simple survey that estimates how long you may live based on lifestyle factors.</p>
+      </header>
+
+      <main>
+        <form id="survey">
+          <fieldset>
+            <legend>Basic information</legend>
+            <label>Current age
+              <input type="number" id="age" min="0" max="120" required />
+            </label>
+            <label>Sex
+              <select id="sex">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other / Prefer not to say</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Body & activity</legend>
+            <label>Height (cm)
+              <input type="number" id="height" min="50" max="300" required />
+            </label>
+            <label>Weight (kg)
+              <input type="number" id="weight" min="20" max="600" required />
+            </label>
+            <label>Exercise (days/week)
+              <input type="number" id="exercise" min="0" max="7" value="3" required />
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Lifestyle habits</legend>
+            <label>Smoking
+              <select id="smoke">
+                <option value="never">Never</option>
+                <option value="former">Former</option>
+                <option value="light">Light (1-10/day)</option>
+                <option value="heavy">Heavy (&gt;10/day)</option>
+              </select>
+            </label>
+
+            <label>Alcohol
+              <select id="alcohol">
+                <option value="none">None</option>
+                <option value="low">Low (1-7 units/week)</option>
+                <option value="moderate">Moderate (8-14/week)</option>
+                <option value="high">High (&gt;14/week)</option>
+              </select>
+            </label>
+
+            <label>Diet quality
+              <select id="diet">
+                <option value="poor">Poor (processed foods often)</option>
+                <option value="average">Average</option>
+                <option value="good">Good (balanced)</option>
+                <option value="excellent">Excellent (healthy, whole foods)</option>
+              </select>
+            </label>
+
+            <label>Sleep (hours/night)
+              <input type="number" id="sleep" min="0" max="24" step="0.5" value="7" required />
+            </label>
+
+            <label>Perceived stress
+              <select id="stress">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Health history</legend>
+            <label>
+              Do you have a close immediate-family history of early death (parent or sibling before 65)?
+              <select id="familyHistory">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </label>
+
+            <label>
+              Chronic conditions (check all that apply)
+              <div class="checkboxes">
+                <label><input type="checkbox" id="cond_diabetes" /> Diabetes</label>
+                <label><input type="checkbox" id="cond_heart" /> Heart disease</label>
+                <label><input type="checkbox" id="cond_cancer" /> Cancer</label>
+                <label><input type="checkbox" id="cond_none" /> None of the above</label>
+              </div>
+            </label>
+          </fieldset>
+
+          <div class="actions">
+            <button type="submit">Estimate my lifespan</button>
+            <button type="button" id="resetBtn">Reset</button>
+          </div>
+        </form>
+
+        <section id="result" aria-live="polite">
+          <!-- results displayed here -->
+        </section>
+      </main>
+
+      <footer>
+        <p>Note: This is a simple educational estimator, not medical advice.</p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+:root{
+  --bg:#f5f8fb;
+  --card:#ffffff;
+  --accent:#2b7cff;
+  --muted:#6b7280;
+  --success:#16a34a;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
+html,body{height:100%;margin:0;background:var(--bg);color:#111}
+.container{max-width:900px;margin:28px auto;padding:24px}
+header{margin-bottom:18px}
+h1{margin:0;font-size:1.9rem}
+.tagline{color:var(--muted);margin:6px 0 0}
+main{background:var(--card);padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(12,18,32,0.06)}
+fieldset{border:1px solid #e6eef8;padding:12px;border-radius:8px;margin-bottom:14px}
+legend{font-weight:600}
+label{display:block;margin:10px 0;font-size:0.95rem}
+input[type="number"],select{width:100%;padding:8px 10px;border:1px solid #dbe9ff;border-radius:6px;background:#fff}
+.checkboxes{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.checkboxes label{display:inline-flex;align-items:center;gap:6px;font-weight:400}
+.actions{display:flex;gap:12px;margin-top:6px}
+button{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
+button#resetBtn{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+#result{margin-top:18px;padding:14px;border-radius:8px;background:#fff;border:1px solid #eef6ff}
+.estimate{font-size:1.6rem;font-weight:700;color:var(--accent)}
+.explain{color:var(--muted);margin-top:8px}
+footer{margin-top:12px;color:var(--muted);font-size:0.9rem}
+
+@media(min-width:720px){
+  .container{padding:32px}
+  fieldset{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .checkboxes{grid-column:1/3}
+}
