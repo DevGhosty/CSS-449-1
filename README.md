@@ -4,8 +4,8 @@ Project metadata
 
 - Name: Steven
 - NetID: srosas
-- GitHub repository: https://github.com/DevGhosty/CSS-449-1  (update if different)
-- Deployed site: (optional) — add URL here if deployed
+- GitHub repository: https://github.com/DevGhosty/CSS-449-1
+- Deployed site: https://devghosty.github.io/CSS-449-1/
 
 Idea
 
