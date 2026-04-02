@@ -12,11 +12,12 @@ How it works
 
 - The app uses a simple rule-based model (not medical advice). It starts from a base life expectancy by sex and applies positive/negative year adjustments for BMI, smoking, alcohol, exercise, diet, sleep, stress, family history, and chronic conditions.
 - The model is intentionally simple for educational/demo purposes.
+- Unit systems: the UI supports Metric (cm/kg) and Imperial (ft/in, lb). When you choose Imperial the inputs are converted client-side to metric for calculations.
 
 Run locally
 
 1. Open `index.html` in your browser (double-click or use "Open File" in your browser).
-2. Fill the form and press "Estimate my lifespan".
+2. Choose Metric or Imperial at the top of the form, fill the fields (for Imperial use feet + inches and pounds), and press "Estimate my lifespan".
 
 Notes and next steps
 

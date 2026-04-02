@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const form = document.getElementById('survey');
   const result = document.getElementById('result');
   const resetBtn = document.getElementById('resetBtn');
+  const unitsMetric = document.getElementById('units_metric');
+  const unitsImperial = document.getElementById('units_imperial');
+  const metricGroup = document.querySelectorAll('.metric-only');
+  const imperialGroup = document.querySelectorAll('.imperial-only');
 
   form.addEventListener('submit', e=>{
     e.preventDefault();
@@ -9,6 +13,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const analysis = estimateLifespan(data);
     renderResult(analysis, data);
   });
+
+  // Units toggle behavior
+  function setUnitsUI(isMetric){
+    metricGroup.forEach(el=>el.style.display = isMetric ? '' : 'none');
+    imperialGroup.forEach(el=>el.style.display = isMetric ? 'none' : '');
+  }
+
+  unitsMetric.addEventListener('change', ()=> setUnitsUI(true));
+  unitsImperial.addEventListener('change', ()=> setUnitsUI(false));
 
   resetBtn.addEventListener('click', ()=>{
     form.reset();
@@ -18,8 +31,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
   function readForm(){
     const age = Number(document.getElementById('age').value || 0);
     const sex = document.getElementById('sex').value;
-    const height = Number(document.getElementById('height').value || 0);
-    const weight = Number(document.getElementById('weight').value || 0);
+    const selectedUnits = document.querySelector('input[name="units"]:checked').value || 'metric';
+    let height = Number(document.getElementById('height').value || 0);
+    let weight = Number(document.getElementById('weight').value || 0);
+    if(selectedUnits === 'imperial'){
+      // convert ft/in and lb to cm/kg
+      const ft = Number(document.getElementById('height_ft').value || 0);
+      const inch = Number(document.getElementById('height_in').value || 0);
+      const lb = Number(document.getElementById('weight_lb').value || 0);
+      const totalInches = ft*12 + inch;
+      height = Math.round(totalInches * 2.54 * 10)/10; // cm
+      weight = Math.round(lb * 0.45359237 * 10)/10; // kg
+    }
     const exercise = Number(document.getElementById('exercise').value || 0);
     const smoke = document.getElementById('smoke').value;
     const alcohol = document.getElementById('alcohol').value;
@@ -32,7 +55,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const cond_cancer = document.getElementById('cond_cancer').checked;
     const cond_none = document.getElementById('cond_none').checked;
 
-    return {age,sex,height,weight,exercise,smoke,alcohol,diet,sleep,stress,familyHistory,cond_diabetes,cond_heart,cond_cancer,cond_none};
+    return {age,sex,height,weight,exercise,smoke,alcohol,diet,sleep,stress,familyHistory,cond_diabetes,cond_heart,cond_cancer,cond_none,units:selectedUnits};
   }
 
   function estimateLifespan(d){
@@ -135,6 +158,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       <div class="summary">
         <div class="estimate">Estimated age at death: ${analysis.estimated} years</div>
         <div class="explain">Years remaining (approx): <strong>${yearsRemaining}</strong></div>
+        <div class="explain">Displayed values use <strong>${d.units === 'imperial' ? 'Imperial (converted)' : 'Metric'}</strong> units.</div>
       </div>
       <details open class="details">
         <summary>How this was calculated</summary>

@@ -16,6 +16,15 @@
       <main>
         <form id="survey">
           <fieldset>
+            <legend>Units</legend>
+            <label>
+              <input type="radio" name="units" value="metric" id="units_metric" checked /> Metric (cm / kg)
+            </label>
+            <label>
+              <input type="radio" name="units" value="imperial" id="units_imperial" /> Imperial (ft/in / lb)
+            </label>
+          </fieldset>
+          <fieldset>
             <legend>Basic information</legend>
             <label>Current age
               <input type="number" id="age" min="0" max="120" required />
@@ -31,12 +40,27 @@
 
           <fieldset>
             <legend>Body & activity</legend>
-            <label>Height (cm)
-              <input type="number" id="height" min="50" max="300" required />
-            </label>
-            <label>Weight (kg)
-              <input type="number" id="weight" min="20" max="600" required />
-            </label>
+            <div class="unit-group metric-only">
+              <label>Height (cm)
+                <input type="number" id="height" min="50" max="300" />
+              </label>
+              <label>Weight (kg)
+                <input type="number" id="weight" min="20" max="600" />
+              </label>
+            </div>
+
+            <div class="unit-group imperial-only" style="display:none">
+              <label>Height — feet
+                <input type="number" id="height_ft" min="1" max="8" />
+              </label>
+              <label>Height — inches
+                <input type="number" id="height_in" min="0" max="11" />
+              </label>
+              <label>Weight (lb)
+                <input type="number" id="weight_lb" min="30" max="1400" />
+              </label>
+            </div>
+
             <label>Exercise (days/week)
               <input type="number" id="exercise" min="0" max="7" value="3" required />
             </label>

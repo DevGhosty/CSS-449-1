@@ -17,6 +17,7 @@ legend{font-weight:600}
 label{display:block;margin:10px 0;font-size:0.95rem}
 input[type="number"],select{width:100%;padding:8px 10px;border:1px solid #dbe9ff;border-radius:6px;background:#fff}
 .checkboxes{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.unit-toggle{display:flex;gap:12px;align-items:center;margin-bottom:10px}
 .checkboxes label{display:inline-flex;align-items:center;gap:6px;font-weight:400}
 .actions{display:flex;gap:12px;margin-top:6px}
 button{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
