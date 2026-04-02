@@ -10,8 +10,14 @@
     <div class="container">
       <header>
         <h1>Lifespan Estimator</h1>
-        <p class="tagline">A simple survey that estimates how long you may live based on lifestyle factors.</p>
+        <p class="tagline">A friendly, interactive survey that gives a simple, educational estimate of life expectancy based on lifestyle & environment.</p>
       </header>
+
+      <div class="visuals" aria-hidden="true">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+      </div>
 
       <main>
         <form id="survey">
@@ -130,8 +136,54 @@
             </label>
           </fieldset>
 
+          <fieldset>
+            <legend>Location & socioeconomic</legend>
+            <label>Country (optional)
+              <input type="text" id="country" placeholder="e.g. United States" />
+            </label>
+            <label>Education level
+              <select id="education">
+                <option value="none">No formal education</option>
+                <option value="primary">Primary</option>
+                <option value="secondary">Secondary</option>
+                <option value="bachelor">Bachelor's</option>
+                <option value="postgrad">Postgraduate</option>
+              </select>
+            </label>
+            <label>Income bracket (local currency)
+              <select id="income">
+                <option value="low">Low</option>
+                <option value="middle">Middle</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <label>Living area
+              <select id="urban">
+                <option value="urban">Urban</option>
+                <option value="suburban">Suburban</option>
+                <option value="rural">Rural</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Work, social & screen time</legend>
+            <label class="checkbox-inline"><input type="checkbox" id="occ_risk" /> High-risk occupation (exposed to hazards)</label>
+            <label>Social connections
+              <select id="social">
+                <option value="lonely">Rarely (few connections)</option>
+                <option value="some">Sometimes</option>
+                <option value="often">Often (good social support)</option>
+              </select>
+            </label>
+            <label>Sedentary time (hours/day)
+              <input type="number" id="sedentary" min="0" max="24" step="0.5" value="6" />
+            </label>
+            <label class="checkbox-inline"><input type="checkbox" id="regular_checkups" /> Regular medical check-ups</label>
+          </fieldset>
+
           <div class="actions">
-            <button type="submit">Estimate my lifespan</button>
+            <button type="submit" id="primaryBtn">Estimate my lifespan</button>
             <button type="button" id="resetBtn">Reset</button>
           </div>
         </form>

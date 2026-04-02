@@ -54,8 +54,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const cond_heart = document.getElementById('cond_heart').checked;
     const cond_cancer = document.getElementById('cond_cancer').checked;
     const cond_none = document.getElementById('cond_none').checked;
+  // New fields
+  const country = (document.getElementById('country') && document.getElementById('country').value) || '';
+  const education = (document.getElementById('education') && document.getElementById('education').value) || 'secondary';
+  const income = (document.getElementById('income') && document.getElementById('income').value) || 'middle';
+  const urban = (document.getElementById('urban') && document.getElementById('urban').value) || 'urban';
+  const occ_risk = (document.getElementById('occ_risk') && document.getElementById('occ_risk').checked) || false;
+  const social = (document.getElementById('social') && document.getElementById('social').value) || 'some';
+  const sedentary = Number(document.getElementById('sedentary') && document.getElementById('sedentary').value || 0);
+  const regular_checkups = (document.getElementById('regular_checkups') && document.getElementById('regular_checkups').checked) || false;
 
-    return {age,sex,height,weight,exercise,smoke,alcohol,diet,sleep,stress,familyHistory,cond_diabetes,cond_heart,cond_cancer,cond_none,units:selectedUnits};
+    return {age,sex,height,weight,exercise,smoke,alcohol,diet,sleep,stress,familyHistory,cond_diabetes,cond_heart,cond_cancer,cond_none,units:selectedUnits,
+      country,education,income,urban,occ_risk,social,sedentary,regular_checkups};
   }
 
   function estimateLifespan(d){
@@ -132,6 +142,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(d.cond_cancer){ conditions.push('Cancer (history)'); condPenalty -= 4.0; }
     if(condPenalty !== 0) adjustments.push({label:`Chronic conditions: ${conditions.join(', ')}`, value:condPenalty});
 
+  // Socioeconomic & environment effects (small adjustments)
+  if(d.education === 'bachelor') adjustments.push({label:'Higher education', value:+0.6});
+  if(d.education === 'postgrad') adjustments.push({label:'Postgraduate education', value:+1.0});
+  if(d.income === 'high') adjustments.push({label:'Higher income', value:+0.8});
+  if(d.income === 'low') adjustments.push({label:'Lower income', value:-0.8});
+  if(d.urban === 'urban') adjustments.push({label:'Urban living (access to care)', value:+0.3});
+  if(d.urban === 'rural') adjustments.push({label:'Rural living (reduced access)', value:-0.4});
+  if(d.occ_risk) adjustments.push({label:'High-risk occupation', value:-2.0});
+
+  // Social & sedentary
+  if(d.social === 'often') adjustments.push({label:'Strong social connections', value:+1.0});
+  if(d.social === 'lonely') adjustments.push({label:'Low social connections', value:-1.0});
+  if(d.sedentary >= 10) adjustments.push({label:`Very sedentary (${d.sedentary} h/day)`, value:-2.0});
+  else if(d.sedentary >= 7) adjustments.push({label:`Sedentary (${d.sedentary} h/day)`, value:-1.0});
+  else adjustments.push({label:`Active (${d.sedentary} h/day sedentary)`, value:+0.2});
+  if(d.regular_checkups) adjustments.push({label:'Regular medical check-ups', value:+0.6});
+
+
     // Sum adjustments
     const totalAdj = adjustments.reduce((s,a)=>s + (a.value || 0), 0);
     let estimated = base + totalAdj;
@@ -190,4 +218,46 @@ document.addEventListener('DOMContentLoaded', ()=>{
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"
     }[c]));
   }
+
+  // Animated background blobs: random smooth movement
+  (function animateBlobs(){
+    const blobs = Array.from(document.querySelectorAll('.visuals .blob'));
+    if(!blobs.length) return;
+
+    function randomRange(min,max){ return Math.random()*(max-min)+min; }
+
+    function moveOnce(){
+      blobs.forEach((b, i)=>{
+        // compute a random translate range based on viewport size
+        const vx = window.innerWidth;
+        const vy = window.innerHeight;
+        // range in px: move within +/- 15% of viewport in x/y
+        const maxX = Math.max(150, vx * 0.18);
+        const maxY = Math.max(100, vy * 0.14);
+        const tx = Math.round(randomRange(-maxX, maxX));
+        const ty = Math.round(randomRange(-maxY, maxY));
+        const rot = Math.round(randomRange(-12,12));
+        const scale = randomRange(0.85, 1.2);
+        const duration = randomRange(8, 16);
+        b.style.transition = `transform ${duration}s cubic-bezier(.2,.8,.2,1)`;
+        b.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg) scale(${scale})`;
+        // tweak opacity slightly per move to keep it dynamic
+        b.style.opacity = (0.45 + Math.random()*0.25).toFixed(2);
+      });
+    }
+
+    // initial positioning small offset so movement starts from base
+    blobs.forEach((b,i)=>{
+      b.style.transform = 'translate(0,0) scale(1)';
+    });
+
+    // move first time after a short delay
+    setTimeout(moveOnce, 400);
+
+    // schedule periodic moves every 6-9 seconds
+    setInterval(moveOnce, 6000 + Math.floor(Math.random()*3500));
+
+    // recompute when resizing to keep ranges sensible
+    window.addEventListener('resize', ()=> moveOnce());
+  })();
 });

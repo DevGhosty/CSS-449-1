@@ -14,6 +14,17 @@ How it works
 - The model is intentionally simple for educational/demo purposes.
 - Unit systems: the UI supports Metric (cm/kg) and Imperial (ft/in, lb). When you choose Imperial the inputs are converted client-side to metric for calculations.
 
+New questions and visuals
+
+- Added optional `country` field, `education` level, `income` bracket, and `living area` (urban/suburban/rural).
+- Added `High-risk occupation` checkbox, `social connections` selector, `sedentary hours/day`, and `regular medical check-ups` checkbox.
+- Visual upgrades: animated colorful background blobs, gradient buttons, shadows, and improved spacing to make the site more engaging.
+
+Run locally
+
+1. Open `index.html` in your browser (double-click or use "Open File" in your browser).
+2. Choose Metric or Imperial at the top of the form, fill the fields (for Imperial use feet + inches and pounds), and press "Estimate my lifespan".
+
 Run locally
 
 1. Open `index.html` in your browser (double-click or use "Open File" in your browser).
